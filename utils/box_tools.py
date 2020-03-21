@@ -75,18 +75,6 @@ def assign_anchors(target_boxes, target_labels, anchors_xyxy):
     return anchor_targets, anchor_labels
 
 
-def hard_negative_mining(loss, labels, neg_pos_ratio):
-    pos_mask = labels > 0
-    num_pos = pos_mask.long().sum(dim=1, keepdim=True)
-    num_neg = num_pos * neg_pos_ratio
-
-    loss[pos_mask] = -math.inf
-    _, indexes = loss.sort(dim=1, descending=True)
-    _, orders = indexes.sort(dim=1)
-    neg_mask = orders < num_neg
-    return pos_mask | neg_mask
-
-
 def wh2xy(box):
     # [x, y, w, h] -> [x_min, y_min, x_max, y_max]
     # box.shape torch.Size([8732, 4])
@@ -129,7 +117,7 @@ def create_anchors():
                     prior_boxex.append([cx, cy, w * ratio, h / ratio])
                     prior_boxex.append([cx, cy, w / ratio, h * ratio])
     prior_boxex = torch.tensor(prior_boxex)
-    # 限制prior_box的范围
+    # 限制prior_box的范围 幻想不灭次元不倒
     prior_boxex = wh2xy(prior_boxex)
     prior_boxex.clamp_(max=1, min=0)
     prior_boxex = xy2wh(prior_boxex)
