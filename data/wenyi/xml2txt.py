@@ -5,9 +5,9 @@ from os import getcwd
 
 sets = ['train', 'val']
 
-classes = ["WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster", "MiniZalu", "Dopelliwin",
-           "ShieldAxe", "SkeletonKnight","Zalu","Cyclone","SlurryBeggar","Gerozaru","Catalog","InfectedMonst",
-           "Gold","StormRider","Close","Door",]
+classes = ["__background__", "WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster", "MiniZalu",
+           "Dopelliwin", "ShieldAxe", "SkeletonKnight","Zalu","Cyclone","SlurryBeggar","Gerozaru","Catalog",
+           "InfectedMonst", "Gold","StormRider","Close","Door",]
 # 当前路径
 data_path = getcwd()
 def convert_annotation(image_id):
