@@ -6,13 +6,15 @@ from os import getcwd
 sets = ['train', 'val']
 
 classes = ["__background__", "WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster", "MiniZalu",
-           "Dopelliwin", "ShieldAxe", "SkeletonKnight","Zalu","Cyclone","SlurryBeggar","Gerozaru","Catalog",
-           "InfectedMonst", "Gold","StormRider","Close","Door",]
+           "Dopelliwin", "ShieldAxe", "SkeletonKnight", "Zalu", "Cyclone", "SlurryBeggar", "Gerozaru", "Catalog",
+           "InfectedMonst", "Gold", "StormRider", "Close", "Door", ]
 # 当前路径
 data_path = getcwd()
+
+
 def convert_annotation(image_id):
-    in_file = open(image_id.replace('JPGImages','Annotations').replace('jpg','xml'),'r')
-    out_file = open(image_id.replace('JPGImages','labels').replace('jpg','txt'),'w')
+    in_file = open(image_id.replace('JPGImages', 'Annotations').replace('jpg', 'xml'), 'r')
+    out_file = open(image_id.replace('JPGImages', 'labels').replace('jpg', 'txt'), 'w')
     tree = ET.parse(in_file)
     root = tree.getroot()
 
@@ -42,20 +44,20 @@ train = random.sample(trainval, tr)
 ftrain = open('train.txt', 'w')
 fval = open('val.txt', 'w')
 for i in list:
-    name = os.path.join(getcwd(),'JPGImages',total_xml[i][:-4]+'.jpg')
+    name = os.path.join(getcwd(), 'JPGImages', total_xml[i][:-4] + '.jpg')
     # name = total_xml[i][:-4]
     if i in train:
-        ftrain.write(name+'\n')
+        ftrain.write(name + '\n')
     else:
-        fval.write(name+'\n')
+        fval.write(name + '\n')
 ftrain.close()
 fval.close()
 
 for image_set in sets:
     # 如果labels文件夹不存在则创建
-    if not os.path.exists(data_path+'\labels\\'):
-        os.makedirs(data_path+'\labels\\')
+    if not os.path.exists(data_path + '\labels\\'):
+        os.makedirs(data_path + '\labels\\')
 
-    image_ids = open(data_path+'\%s.txt' % (image_set)).read().strip().split()
+    image_ids = open(data_path + '\%s.txt' % (image_set)).read().strip().split()
     for image_id in image_ids:
         convert_annotation(image_id)
