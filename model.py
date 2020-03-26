@@ -116,7 +116,7 @@ def vgg(cfg, vgg_pretrain=True):
     vgg_layers = nn.ModuleList(layers)
     # 是否加载已经训练好的模型
     if vgg_pretrain:
-        vgg_layers.load_state_dict(torch.load(r'D:\py_pro\11\weights\vgg16_reducedfc.pth'))
+        vgg_layers.load_state_dict(torch.load(cfg.vgg16_path))
     return vgg_layers
 
 

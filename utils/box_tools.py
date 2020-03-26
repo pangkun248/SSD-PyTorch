@@ -6,7 +6,6 @@ from config import cfg
 import numpy as np
 
 def loc2box(loc, box):
-    # 源码中 都是0.1
     # 这里由于可以使用torch的广播机制,所以可以忽略locations比priors多一维
     return torch.cat([
         loc[..., :2] * cfg.center_variance * box[..., 2:] + box[..., :2],

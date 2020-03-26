@@ -1,6 +1,6 @@
 import torch
 from tqdm import tqdm
-from Dataloader import Our_Dataloader_test
+from torch.utils.data import DataLoader
 from utils.box_tools import box_iou
 from utils.box_tools import filter_box
 from collections import defaultdict
@@ -14,7 +14,7 @@ def Eval( model, test_dataset):
     gt_boxs_list = []
     gt_labels_list = []
     model.eval()
-    test_loader = Our_Dataloader_test(dataset=test_dataset, batch_size=10)
+    test_loader = DataLoader(dataset=test_dataset, batch_size=10,num_workers=cfg.num_workers)
     with torch.no_grad():
         for images, loc, label, image_names in tqdm(test_loader):
             images = images.cuda()

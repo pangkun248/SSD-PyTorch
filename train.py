@@ -1,20 +1,19 @@
 from dataset import ListDataset
 from config import cfg
 import torch
-from Dataloader import Our_Dataloader
 from model import SSD
 from utils.eval_tools import Eval
 import visdom
 import numpy as np
 from tqdm import tqdm
 from terminaltables import AsciiTable
-
+from torch.utils.data import DataLoader
 
 if __name__ == '__main__':
     train_dataset = ListDataset(path=cfg.train_dir, is_train=True)
     test_dataset = ListDataset(path=cfg.train_dir, is_train=False)
     model = SSD().cuda()
-    data_loader = Our_Dataloader(train_dataset, batch_size=cfg.batch_size, shuffle=True)
+    data_loader = DataLoader(train_dataset, batch_size=cfg.batch_size, shuffle=True,num_workers=cfg.num_workers)
     if cfg.use_adam:
         optimizer = torch.optim.Adam(model.parameters(),lr=cfg.lr,weight_decay=cfg.weight_decay)
     else:

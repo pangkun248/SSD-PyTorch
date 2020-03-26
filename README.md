@@ -1,4 +1,4 @@
-代码源自 https://github.com/yatengLG/SSD-Pytorch
+代码源自 https://github.com/yatengLG/Retinanet-Pytorch
 
 在此基础上进行修改与注释(删除了数据增强部分),因为我发现对于部分场景下的任务.数据增强反而会降低模型的mAP,以及会放慢收敛的速度
 
@@ -10,5 +10,5 @@
 
 测试:运行dection_image.py或者dection_video.py文件即可
 
-###### 由于不知道什么原因,测试时在2080Ti上的fps约为20ms左右,比原作者要慢5,6ms左右.待解决。。。。。。
+###### 由于NMS的时候耗费了大量的时间,测试时在2080Ti上的fps约为20ms左右,比原作者要慢5,6ms左右.
 
