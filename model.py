@@ -116,7 +116,19 @@ def vgg(cfg, vgg_pretrain=True):
     vgg_layers = nn.ModuleList(layers)
     # 是否加载已经训练好的模型
     if vgg_pretrain:
-        vgg_layers.load_state_dict(torch.load(cfg.vgg16_path))
+        # 加载已经训练好的vgg模型,不包括extras_base层,除非你从头开始训练.否则,这个模型可以不用下载
+        url = 'https://s3.amazonaws.com/amdegroot-models/vgg16_reducedfc.pth'
+        # 下载路径
+        weight_path = r'D:\py_pro\SSD-PyTorch\weights\vgg16_reducedfc.pth'
+        if not os.path.exists(weight_path):
+            print('模型不存在,下载中')
+            wget.download(url=url, out=weight_path)
+            print('下载完成')
+            print(' --- load weight finish ---')
+        else:
+            print('下载权重所在文件夹不存在,请创建')
+            exit()
+        vgg_layers.load_state_dict(torch.load(r'D:\py_pro\SSD-PyTorch\weights\vgg16_reducedfc.pth'))
     return vgg_layers
 
 
@@ -169,16 +181,6 @@ class L2Norm(nn.Module):
         x = torch.div(x, norm)
         out = self.weight.unsqueeze(0).unsqueeze(2).unsqueeze(3).expand_as(x) * x
         return out
-
-def load_vgg_weights():
-    # 加载已经训练好的vgg模型,不包括extras_base层,除非你从头开始训练.否则,这个模型可以不用下载
-    url = 'https://s3.amazonaws.com/amdegroot-models/vgg16_reducedfc.pth'
-    weight_path = r'/\Weights\pretrained\vgg16_reducedfc.pth'
-    if not os.path.exists(weight_path):
-        print('模型不存在,下载中')
-        wget.download(url=url,out=weight_path)
-        print('下载完成')
-        print(' --- load weight finish ---')
 
 
 def hard_negative_mining(loss, labels, neg_pos_ratio=3):
