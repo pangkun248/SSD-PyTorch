@@ -1,14 +1,13 @@
 class Config:
     env = 'SSD'  # Visdom可是坏环境名称
     # 训练集路径,验证集路径(mAP相关)
-    train_dir = r'D:\py_pro\11\data\wenyi\train.txt'
-    val_dir = r'D:\py_pro\11\data\wenyi\val.txt'
+    train_dir = r'D:\py_pro\YOLOv3-PyTorch\data\wenyi\train.txt'
+    val_dir = r'D:\py_pro\YOLOv3-PyTorch\data\wenyi\val.txt'
     test_dir = r'D:\py_pro\11\test'
     class_name = ("__background__", "WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster",
                   "MiniZalu", "Dopelliwin", "ShieldAxe", "SkeletonKnight", "Zalu", "Cyclone", "SlurryBeggar",
                   "Gerozaru", "Catalog", "InfectedMonst", "Gold", "StormRider", "Close", "Door",)
     load_path = r'D:\py_pro\11\weights\map_0.8266.pt'  # 基于此模型权重训练
-    cgg16_path = r'D:\py_pro\SSD-PyTorch\weights\vgg16_reducedfc.pth'
     # 网络输入尺寸
     height = 300
     num_workers = 2  # 取决于你的cpu核数,比如9400F是六核的,建议2~4之间会比较好
