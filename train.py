@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 
 if __name__ == '__main__':
     train_dataset = ListDataset(path=cfg.train_dir, is_train=True)
-    test_dataset = ListDataset(path=cfg.train_dir, is_train=False)
+    test_dataset = ListDataset(path=cfg.val_dir, is_train=False)
     model = SSD().cuda()
     data_loader = DataLoader(train_dataset, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers)
     if cfg.use_adam:
