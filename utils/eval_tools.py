@@ -7,7 +7,7 @@ from collections import defaultdict
 import numpy as np
 from config import cfg
 
-def Eval( model, test_dataset):
+def Eval(model, test_dataset):
     pred_boxes_list = []
     pred_labels_list = []
     pred_scores_list = []
@@ -18,8 +18,8 @@ def Eval( model, test_dataset):
     with torch.no_grad():
         for images, loc, label, image_names in tqdm(test_loader):
             images = images.cuda()
-            pred_cls, pred_loc = model(images)
-            results = filter_box(pred_cls, pred_loc)
+            pred_locs, pred_cls, = model(images)
+            results = filter_box(pred_locs, pred_cls,)
             for image_name, result in zip(image_names, results):
                 pred_boxes, pred_labels, pred_scores = result
                 pred_boxes, pred_labels, pred_scores = pred_boxes.to('cpu').numpy(), pred_labels.to('cpu').numpy(), pred_scores.to('cpu').numpy()

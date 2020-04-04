@@ -123,7 +123,7 @@ def create_anchors():
     return prior_boxex
 
 
-def filter_box(pred_cls, pred_locs):
+def filter_box(pred_locs, pred_cls,):
     """
     该方法实际上是一个对网络预测结果的处理(筛选),符合条件的即可以作为输出结果显示
     pred_cls :  SSD网络预测的一个batch中所有anchor的各个类别置信度    [batch_size, num_anchors, num_classes]

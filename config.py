@@ -1,13 +1,15 @@
 class Config:
     env = 'SSD'  # Visdom可是坏环境名称
     # 训练集路径,验证集路径(mAP相关)
-    train_dir = r'D:\py_pro\YOLOv3-PyTorch\data\wenyi\train.txt'
-    val_dir = r'D:\py_pro\YOLOv3-PyTorch\data\wenyi\val.txt'
-    test_dir = r'D:\py_pro\11\test'
+    train_dir = r'data\wenyi\train.txt'
+    val_dir = r'data\wenyi\val.txt'
+    test_dir = r'test'
     class_name = ("__background__", "WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster",
                   "MiniZalu", "Dopelliwin", "ShieldAxe", "SkeletonKnight", "Zalu", "Cyclone", "SlurryBeggar",
                   "Gerozaru", "Catalog", "InfectedMonst", "Gold", "StormRider", "Close", "Door",)
-    load_path = r'D:\py_pro\11\weights\map_0.8266.pt'  # 基于此模型权重训练
+    pretrained_path = r''  # 基于此模型权重训练
+    vgg16_reducedfc = r'D:\py_pro\SSD-PyTorch\weights\vgg16_reducedfc.pth'  # vgg16魔改后的特征提取网络的权重
+    num_classes = len(class_name)
     # 网络输入尺寸
     height = 300
     num_workers = 2  # 取决于你的cpu核数,比如9400F是六核的,建议2~4之间会比较好
@@ -17,7 +19,7 @@ class Config:
     weight_decay = 0.0005  # 权重衰减系数
     lr_decay = 0.1  # 每隔指定epoch学习率下降的倍数
     lr = 1e-3  # 初始学习率
-    epoch = 14  # 训练的轮数
+    epoch = 100  # 训练的轮数
     batch_size = 10
 
     # center_variance(xy)和size_variance(wh)是可以调整loc损失在整体loss中的比例
