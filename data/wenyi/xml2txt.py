@@ -4,17 +4,17 @@ import random
 from os import getcwd
 
 sets = ['train', 'val']
-
-classes = ["__background__", "WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster", "MiniZalu",
-           "Dopelliwin", "ShieldAxe", "SkeletonKnight", "Zalu", "Cyclone", "SlurryBeggar", "Gerozaru", "Catalog",
-           "InfectedMonst", "Gold", "StormRider", "Close", "Door", ]
+# 注意SSD网络中是有背景类的,虽然真实label里面并没有.也就是说txt文件中不可能会出现cls_id为0的一行
+classes = ["__background__", "WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster", "MiniZalu", "Dopelliwin",
+           "ShieldAxe", "SkeletonKnight","Zalu","Cyclone","SlurryBeggar","Gerozaru","Catalog",
+           "InfectedMonst","Gold","StormRider","Close","Door",]
+class_num = len(classes)
 # 当前路径
 data_path = getcwd()
-
-
 def convert_annotation(image_id):
-    in_file = open(image_id.replace('JPGImages', 'Annotations').replace('jpg', 'xml'), 'r')
-    out_file = open(image_id.replace('JPGImages', 'labels').replace('jpg', 'txt'), 'w')
+    print(image_id.replace('JPGImages','Annotations').replace('jpg','xml'))
+    in_file = open(image_id.replace('JPGImages','Annotations').replace('jpg','xml'),'r')
+    out_file = open(image_id.replace('JPGImages','labels').replace('jpg','txt'),'w')
     tree = ET.parse(in_file)
     root = tree.getroot()
 
@@ -25,9 +25,9 @@ def convert_annotation(image_id):
             continue
         cls_id = classes.index(cls)
         xmlbox = obj.find('bndbox')
-        b = (xmlbox.find('xmin').text, xmlbox.find('ymin').text, xmlbox.find('xmax').text,
-             xmlbox.find('ymax').text)
-        out_file.write(str(cls_id) + " " + " ".join(b) + '\n')
+        b = (float(xmlbox.find('xmin').text), float(xmlbox.find('ymin').text), float(xmlbox.find('xmax').text),
+             float(xmlbox.find('ymax').text))
+        out_file.write(str(cls_id) + " " + " ".join([str(a) for a in b]) + '\n')
 
 
 trainval_percent = 1
@@ -44,20 +44,19 @@ train = random.sample(trainval, tr)
 ftrain = open('train.txt', 'w')
 fval = open('val.txt', 'w')
 for i in list:
-    name = os.path.join(getcwd(), 'JPGImages', total_xml[i][:-4] + '.jpg')
-    # name = total_xml[i][:-4]
+    name = os.path.join(getcwd(),'JPGImages',total_xml[i][:-4]+'.jpg')
     if i in train:
-        ftrain.write(name + '\n')
+        ftrain.write(name+'\n')
     else:
-        fval.write(name + '\n')
+        fval.write(name+'\n')
 ftrain.close()
 fval.close()
 
 for image_set in sets:
     # 如果labels文件夹不存在则创建
-    if not os.path.exists(data_path + '\labels\\'):
-        os.makedirs(data_path + '\labels\\')
+    if not os.path.exists(data_path+'\labels\\'):
+        os.makedirs(data_path+'\labels\\')
 
-    image_ids = open(data_path + '\%s.txt' % (image_set)).read().strip().split()
+    image_ids = open(data_path+'\%s.txt' % (image_set)).read().strip().split()
     for image_id in image_ids:
         convert_annotation(image_id)
