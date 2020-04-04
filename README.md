@@ -10,5 +10,5 @@
 
 测试:运行dection_image.py或者dection_video.py文件即可
 
-###### 由于NMS的时候耗费了大量的时间,测试时在2080Ti上的fps约为20ms左右,比原作者要慢5,6ms左右.
+###### GPU:1660 CPU:8400 SSD-300前向传播时间:22ms左右
 
