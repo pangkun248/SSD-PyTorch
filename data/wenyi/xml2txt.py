@@ -8,7 +8,7 @@ sets = ['train', 'val']
 classes = ["__background__", "WhitehairedBanshee", "UndeadSkeleton", "WhitehairedMonster", "SlurryMonster", "MiniZalu", "Dopelliwin",
            "ShieldAxe", "SkeletonKnight","Zalu","Cyclone","SlurryBeggar","Gerozaru","Catalog",
            "InfectedMonst","Gold","StormRider","Close","Door",]
-class_num = len(classes)
+
 # 当前路径
 data_path = getcwd()
 def convert_annotation(image_id):
